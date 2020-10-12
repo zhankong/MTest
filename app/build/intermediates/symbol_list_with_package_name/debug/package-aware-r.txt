@@ -1232,7 +1232,6 @@ id mtrl_internal_children_alpha_tag
 id multiply
 id nav_controller_view_tag
 id nav_graph
-id nav_host_fragment
 id navigation_header_container
 id never
 id none

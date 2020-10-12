@@ -15,7 +15,11 @@ def getMyStoreFile() {
         return file(project.DemoAPP_KEY_STORE)
     }
 }
-
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm')
+    return formattedDate
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"

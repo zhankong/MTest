@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
         /**测试s*/
-        print("Hole Test")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

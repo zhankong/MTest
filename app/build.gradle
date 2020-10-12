@@ -15,11 +15,6 @@ def getMyStoreFile() {
         return file(project.DemoAPP_KEY_STORE)
     }
 }
-def getDate() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmm')
-    return formattedDate
-}
 
 android {
     compileSdkVersion 29
@@ -49,22 +44,22 @@ android {
             //别名
             keyAlias project.DemoAPP_ALAIS
             keyPassword project.DemoAPP_PSW
+            storeFile file('F:\\jks\\two.jks')
             //路径
-            storeFile getMyStoreFile()
             storePassword project.DemoAPP_STORE_PSW
+            v2SigningEnabled true       //对APK签名
         }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
             signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 

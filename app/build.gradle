@@ -2,6 +2,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+/**
+ * 获取key路径，创建一份方法来获取key文件路径，jenkins和studio中可使用不同的路径
+ * @return
+ */
+def getMyStoreFile() {
+    if ("true".equals(project.IS_JENKINS)) {
+        System.out.println("jenkins")
+        return file(project.DemoAPP_KEYSTORE)
+    } else {
+        System.out.println("normal")
+        return file(project.DemoAPP_KEY_STORE)
+    }
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -16,12 +30,39 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            //别名
+            keyAlias project.DemoAPP_ALAIS
+            keyPassword project.DemoAPP_PSW
+            //路径
+            storeFile getMyStoreFile()
+            storePassword project.DemoAPP_STORE_PSW
+            v2SigningEnabled true       //对APK签名
+        }
+        debug {
+            //别名
+            keyAlias project.DemoAPP_ALAIS
+            keyPassword project.DemoAPP_PSW
+            //路径
+            storeFile getMyStoreFile()
+            storePassword project.DemoAPP_STORE_PSW
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -29,6 +70,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
 }
 
 dependencies {
